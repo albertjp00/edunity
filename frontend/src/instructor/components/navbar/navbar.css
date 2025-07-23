@@ -1,0 +1,21 @@
+
+
+.profile-img{
+    width: 40px;
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+}
+
+.add-course{
+    background-color: rgb(99, 99, 222);
+    border: none;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    
+}

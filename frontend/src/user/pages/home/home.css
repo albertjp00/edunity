@@ -1,0 +1,27 @@
+/* .main {
+  display: flex;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+
+
+@media (max-width: 767px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+} */
+.main {
+  display: flex;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 767px) {
+  .main {
+    flex-direction: column;
+  }
+}

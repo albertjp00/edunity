@@ -1,0 +1,66 @@
+.verify{
+    background-color: white;
+}
+
+.formOtp {
+  width: 300px;
+  margin: 100px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+
+h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.otp-container input {
+
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+/* 
+input:focus {
+  border-color: #4CAF50;
+  outline: none;
+} */
+
+.button {
+  width: 100%;
+  padding: 12px;
+  background-color: #829ae9;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.timer-resend .btn{
+    width: 100%;
+  padding: 12px;
+  background-color: #829ae9;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* button[type="submit"]:hover {
+  background-color: #45a049;
+} */
