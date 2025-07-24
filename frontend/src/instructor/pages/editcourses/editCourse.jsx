@@ -16,14 +16,14 @@ const EditCourse = () => {
     modules: [],
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const addModule = () => {
     setForm({
       ...form,
-      modules: [...form.modules, { title: '', lessons: [] }],
+      modules: [...form.modules, { title: '', videoUrl: '', content: '' }],
     });
   };
 
@@ -32,27 +32,9 @@ const EditCourse = () => {
     setForm({ ...form, modules: updatedModules });
   };
 
-  const updateModuleTitle = (index, value) => {
+  const updateModule = (index, field, value) => {
     const modules = [...form.modules];
-    modules[index].title = value;
-    setForm({ ...form, modules });
-  };
-
-  const addLesson = (moduleIndex) => {
-    const modules = [...form.modules];
-    modules[moduleIndex].lessons.push({ title: '', videoUrl: '', content: '' });
-    setForm({ ...form, modules });
-  };
-
-  const removeLesson = (moduleIndex, lessonIndex) => {
-    const modules = [...form.modules];
-    modules[moduleIndex].lessons = modules[moduleIndex].lessons.filter((_, idx) => idx !== lessonIndex);
-    setForm({ ...form, modules });
-  };
-
-  const updateLesson = (moduleIndex, lessonIndex, field, value) => {
-    const modules = [...form.modules];
-    modules[moduleIndex].lessons[lessonIndex][field] = value;
+    modules[index][field] = value;
     setForm({ ...form, modules });
   };
 
@@ -62,19 +44,11 @@ const EditCourse = () => {
       return false;
     }
 
-    for (let m = 0; m < form.modules.length; m++) {
-      const module = form.modules[m];
-      if (!module.title.trim()) {
-        toast.error(`Module ${m + 1} title is required.`);
+    for (let i = 0; i < form.modules.length; i++) {
+      const module = form.modules[i];
+      if (!module.title.trim() || !module.videoUrl.trim()) {
+        toast.error(`Module ${i + 1} must have a title and video URL.`);
         return false;
-      }
-
-      for (let l = 0; l < module.lessons.length; l++) {
-        const lesson = module.lessons[l];
-        if (!lesson.title.trim() || !lesson.videoUrl.trim()) {
-          toast.error(`Lesson ${l + 1} in Module ${m + 1} must have a title and video URL.`);
-          return false;
-        }
       }
     }
 
@@ -87,14 +61,17 @@ const EditCourse = () => {
     if (!validateForm()) return;
 
     try {
-      const instructorId = localStorage.getItem('instructor');
-
       const formData = new FormData();
-
       formData.append('title', form.title);
       formData.append('description', form.description);
       formData.append('price', form.price);
-      formData.append('thumbnail', form.thumbnail);
+
+      if (form.thumbnail instanceof File) {
+        formData.append('thumbnail', form.thumbnail);
+      } else {
+        formData.append('thumbnail', form.thumbnail); // or skip if needed
+      }
+
       formData.append('modules', JSON.stringify(form.modules));
 
       const res = await axios.put(`http://localhost:4000/instructor/editCourse/?id=${id}`, formData, {
@@ -144,62 +121,39 @@ const EditCourse = () => {
         type="file"
         name="thumbnail"
         accept="image/*"
-        onChange={e => setForm({ ...form, thumbnail: e.target.files[0] })}
+        onChange={(e) => setForm({ ...form, thumbnail: e.target.files[0] })}
       />
 
       <hr />
 
       <h3>Modules</h3>
-      {form.modules.map((module, mIndex) => (
-        <div key={mIndex} style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem' }}>
+      {form.modules.map((module, index) => (
+        <div key={index} className="module-card">
           <input
             type="text"
             placeholder="Module Title"
             value={module.title}
-            onChange={e => updateModuleTitle(mIndex, e.target.value)}
+            onChange={(e) => updateModule(index, 'title', e.target.value)}
           />
-
-          <h4>Lessons</h4>
-          {module.lessons.map((lesson, lIndex) => (
-            <div key={lIndex} style={{ marginBottom: '1rem', paddingLeft: '1rem' }}>
-              <input
-                type="text"
-                placeholder="Lesson Title"
-                value={lesson.title}
-                onChange={e => updateLesson(mIndex, lIndex, 'title', e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Video URL"
-                value={lesson.videoUrl}
-                onChange={e => updateLesson(mIndex, lIndex, 'videoUrl', e.target.value)}
-              />
-              <textarea
-                placeholder="Content"
-                value={lesson.content}
-                onChange={e => updateLesson(mIndex, lIndex, 'content', e.target.value)}
-              />
-              <button type="button" onClick={() => removeLesson(mIndex, lIndex)} >
-                 Remove Lesson
-              </button>
-            </div>
-          ))}
-
-          <button type="button" onClick={() => addLesson(mIndex)}>
-            + Add Lesson
-          </button>
-          <button type="button" onClick={() => removeModule(mIndex)} >
-            Remove This Module
-          </button>
+          <input
+            type="text"
+            placeholder="Video URL"
+            value={module.videoUrl}
+            onChange={(e) => updateModule(index, 'videoUrl', e.target.value)}
+          />
+          <textarea
+            placeholder="Content"
+            value={module.content}
+            onChange={(e) => updateModule(index, 'content', e.target.value)}
+          />
+          <button type="button" onClick={() => removeModule(index)}>Remove Module</button>
         </div>
       ))}
 
-      <button type="button" onClick={addModule}>
-        + Add Module
-      </button>
+      <button type="button" onClick={addModule}>+ Add Module</button>
 
       <br /><br />
-      <button className='add-course-btn' type="submit">Save</button>
+      <button className="add-course-btn" type="submit">Save</button>
     </form>
   );
 };

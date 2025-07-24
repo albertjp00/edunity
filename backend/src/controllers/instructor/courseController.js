@@ -11,10 +11,11 @@ const courseService = require('../../services/instructor/courseServices')
             
             const courseData = {
                         ...req.body,
-                        modules : JSON.parse(req.body.modules)
+                        thumbnail : file,
+                        modules: JSON.parse(req.body.modules),
             }
-            courseData.thumbnail = file
-            console.log('course controller',courseData,courseData.modules);
+            
+            console.log('course controller',courseData);
 
             
             

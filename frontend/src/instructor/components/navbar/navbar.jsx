@@ -14,21 +14,28 @@ const Navbar = () => {
    navigate('/instructor/login')
   }
 
+  const addCourse = ()=>{
+    navigate('/instructor/addCourse')
+  }
+
   return (
     <div className='navbar'>
       <div className='logo'>
         <p>EDUNITY</p>
       </div>
-    <Link to='/instructor/addCourse'>
-        <button className='add-course'>Add Course</button>
-        </Link>
+    
       <div className='profile-section'>
         {/* <div className='hamburger' onClick={toggleSidebar}>
           ☰
         </div> */}
         
+        
         <div className="nav-right">
-            <button className='logout-btn' onClick={handleLogout}>Logout</button>
+        
+        <p className='add-course' onClick={addCourse}>Create Course</p>
+        
+
+            <p className='logout' onClick={handleLogout}>Logout</p>
         <Link to='/instructor/profile'>
           <img src={profileImage} alt='Profile' className='profile-img' />
         </Link>
