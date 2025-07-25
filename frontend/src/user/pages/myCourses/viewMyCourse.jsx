@@ -1,45 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import ReactPlayer from 'react-player';
 import './viewMyCourse.css';
-
-import YouTube from 'react-youtube';
-
-const YouTubePlayer = ({ url }) => {
-  const extractVideoId = (url) => {
-    const match = url.match(/(?:youtu\.be\/|v=)([a-zA-Z0-9_-]{11})/);
-    return match ? match[1] : null;
-  };
-
-  const videoId = extractVideoId(url);
-
-  const opts = {
-    height: '400',
-    width: '100%',
-    playerVars: {
-      autoplay: 1,
-      mute: 1,
-    },
-  };
-
-  return (
-    <>
-      {videoId ? (
-        <YouTube videoId={videoId} opts={opts} />
-      ) : (
-        <p>Invalid or unsupported video URL</p>
-      )}
-    </>
-  );
-};
-
 
 const ViewMyCourse = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
-  const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+  const [expandedModule, setExpandedModule] = useState(null);
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
   const fetchCourse = async () => {
     try {
@@ -54,44 +22,26 @@ const ViewMyCourse = () => {
     fetchCourse();
   }, []);
 
+  const toggleModule = (index) => {
+    setExpandedModule(expandedModule === index ? null : index);
+  };
+
+  const convertToEmbedUrl = (url) => {
+    if (url.includes('watch?v=')) {
+      return url.replace('watch?v=', 'embed/');
+    }
+    if (url.includes('youtu.be/')) {
+      return url.replace('youtu.be/', 'www.youtube.com/embed/');
+    }
+    return url;
+  };
+
   if (!course) return <p>Loading...</p>;
-
-  const currentModule = course.modules[currentModuleIndex];
-  const currentLesson = currentModule.lessons[currentLessonIndex];
-
-const handleNextLesson = () => {
-  console.log('next');
-  
-  const currentModule = course.modules[currentModuleIndex];
-
-  if (currentLessonIndex < currentModule.lessons.length - 1) {
-    setCurrentLessonIndex(prev => prev + 1);
-
-  } else if (currentModuleIndex < course.modules.length - 1) {
-
-    setCurrentModuleIndex(prev => prev + 1);
-    setCurrentLessonIndex(0);
-  }
-};
-
-const handlePrevLesson = () => {
-  if (currentLessonIndex > 0) {
-    setCurrentLessonIndex(prev => prev - 1);
-
-  } else if (currentModuleIndex > 0) {
-
-    const prevModuleIndex = currentModuleIndex - 1;
-    const lastLessonIndex = course.modules[prevModuleIndex].lessons.length - 1;
-    setCurrentModuleIndex(prevModuleIndex);
-    setCurrentLessonIndex(lastLessonIndex);
-
-  }
-};
-
 
   return (
     <div className="course-detail-page">
       <h2>{course.title}</h2>
+
       {course.thumbnail && (
         <img
           src={`http://localhost:4000/assets/${course.thumbnail}`}
@@ -99,56 +49,83 @@ const handlePrevLesson = () => {
           className="detail-thumbnail"
         />
       )}
+
       <p><strong>Description:</strong> {course.description}</p>
 
-      <div className="module-selector">
-        <h3>Select Module:</h3>
-        {course.modules.map((module, idx) => (
-          <button
-            key={idx}
-            className={`module-button ${currentModuleIndex === idx ? 'active' : ''}`}
-            onClick={() => {
-              setCurrentModuleIndex(idx);
-              setCurrentLessonIndex(0);
-            }}
-          >
-            {module.title || `Module ${idx + 1}`}
-          </button>
-        ))}
-      </div>
+      <div className="modules">
+        <h3>Modules:</h3>
+        {course.modules.length > 0 ? (
+          <div className="modules-list">
+            {course.modules.map((module, idx) => (
+              <div key={idx} className="module">
+                <div
+                  className="module-header"
+                  onClick={() => toggleModule(idx)}
+                  style={{ cursor: 'pointer', background: '#f0f0f0', padding: '10px', borderRadius: '5px' }}
+                >
+                  <h4>📘 {module.title || `Module ${idx + 1}`}</h4>
+                </div>
 
-      <div className="lesson-viewer">
-        <h3>{currentLesson?.title}</h3>
-
-        {currentLesson?.videoUrl && (
-          <div className="video-wrapper">
-            <YouTubePlayer url={currentLesson.videoUrl} />
+                {expandedModule === idx && (
+                  <div className="module-body" style={{ padding: '10px 20px' }}>
+                    {module.lessons.map((lesson, lessonIdx) => (
+                      <div
+                        key={lessonIdx}
+                        className="lesson-item"
+                        style={{
+                          margin: '10px 0',
+                          padding: '10px',
+                          background: '#fff',
+                          borderRadius: '5px',
+                          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                          cursor: 'pointer',
+                          border: selectedLesson === lesson ? '2px solid #1976d2' : '1px solid #ddd'
+                        }}
+                        onClick={() => setSelectedLesson(lesson)}
+                      >
+                        <strong>🎬 {lesson.title}</strong>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
+        ) : (
+          <p>No modules found.</p>
         )}
-
-
-        <p>{currentLesson?.content}</p>
-
-        <div className="lesson-nav">
-          <button
-  onClick={handleNextLesson}
-  disabled={
-    currentModuleIndex === course.modules.length - 1 &&
-    currentLessonIndex === course.modules[currentModuleIndex].lessons.length - 1
-  }
->
-  {console.log(
-    "Disabled condition:",
-    currentModuleIndex === course.modules.length - 1 &&
-      currentLessonIndex === course.modules[currentModuleIndex].lessons.length - 1
-  )}
-  Next Lesson ▶
-</button>
-
-
-        </div>
-
       </div>
+
+      {selectedLesson && (
+        <div className="lesson-viewer" style={{ marginTop: '30px' }}>
+          <h3>{selectedLesson.title}</h3>
+
+          {selectedLesson.videoUrl.includes('youtube.com') || selectedLesson.videoUrl.includes('youtu.be') ? (
+            <iframe
+              width="100%"
+              height="400"
+              src={convertToEmbedUrl(selectedLesson.videoUrl)}
+              title="Lesson Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ marginTop: '10px' }}
+            ></iframe>
+          ) : (
+            <video
+              width="100%"
+              height="auto"
+              controls
+              style={{ marginTop: '10px' }}
+            >
+              <source src={selectedLesson.videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )}
+
+          <p style={{ marginTop: '20px' }}>{selectedLesson.content}</p>
+        </div>
+      )}
     </div>
   );
 };

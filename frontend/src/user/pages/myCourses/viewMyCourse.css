@@ -1,64 +1,33 @@
-.course-detail-page {
-  padding: 2rem;
-  max-width: 800px;
-  margin: auto;
-}
-
-.detail-thumbnail {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
+.module-dropdown {
+  border: 1px solid #ccc;
   margin-bottom: 1rem;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.module-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.module-button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  background-color: #f3f3f3;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.module-button.active {
-  background-color: #007bff;
-  color: white;
-}
-
-.lesson-viewer {
-  border: 1px solid #eee;
+.module-header {
+  background-color: #f4f4f4;
   padding: 1rem;
-  border-radius: 10px;
-  background-color: #fafafa;
-}
-
-.lesson-video {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
-.video-wrapper {
-  margin-bottom: 1.5rem;
-}
-
-.lesson-nav {
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
+  align-items: center;
 }
 
+.lesson-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+}
 
-.lesson-nav button{
-    padding: 12px;
-    background-color: #007bff;
-    color: black;
-    cursor: pointer;
+.lesson-item {
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  border-top: 1px solid #eee;
+}
+
+.lesson-item:hover,
+.lesson-item.active {
+  background-color: #e3f2fd;
 }

@@ -14,6 +14,7 @@ const ProfileEdit = () => {
         name : '',
         email : '',
         expertise : '',
+        bio : '',
         image : ''
     })
 
@@ -36,8 +37,8 @@ const ProfileEdit = () => {
          
          const formData = new FormData()
          formData.append('name', data.name);
-    formData.append('expertise', data.expertise);
-    // formData.append('number', data.number);
+        formData.append('expertise', data.expertise);
+          formData.append('bio', data.bio);
     if (selectedFile) {
       formData.append('profileImage', selectedFile);
     }
@@ -125,13 +126,13 @@ const ProfileEdit = () => {
           placeholder="Enter Email"
         /> */}
         
-        <label>Enter Number</label>
+        <label>Enter Bio</label>
         <input
           type="text"
-          name="number"
-          value={data.number}
+          name="bio"
+          value={data.bio}
           onChange={handleChange}
-          placeholder="Enter Mobile Number"
+          placeholder="Enter your bio"
         />
       </div>
 

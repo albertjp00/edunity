@@ -1,6 +1,7 @@
 const Course = require('../../models/courseModel')
 const jwt = require('jsonwebtoken')
 const MyCourse = require('../../models/myCourses')
+const Instructor = require('../../models/instructorModel')
 
 
 
@@ -19,7 +20,15 @@ const fetchCourses = async (token)=>{
 
 const getDetails = async (id)=>{
   try {
-    const data = await Course.findById(id)
+
+    const course = await Course.findById(id)
+    const instructor = await Instructor.findById(course.instructorId)
+    console.log('instuc' , instructor);
+    
+    const data = {
+        course,
+        instructor
+    }
     console.log('course details services ',data);
     
     return data

@@ -38,6 +38,7 @@ const Profile = () => {
           />
           <h2>{user.name}</h2>
           <p><strong>Email:</strong> {user.email}</p>
+          <p><string>Bio:</string>{user.bio}</p>
           <p><strong>Role:</strong> Instructor</p>
           <p><strong>Expertise:</strong>{user.expertise}</p>
           <p><strong>KYC application:</strong>

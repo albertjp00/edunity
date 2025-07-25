@@ -29,9 +29,11 @@ const userCourseService = require('../../services/user/userCourseService')
                 const id = req.query.id
                 console.log('user get details course',id);
                 
-                const course = await userCourseService.getDetails(id)
-    
-                res.json({success:true,course:course})
+                const result = await userCourseService.getDetails(id)
+                
+                console.log(result);
+                
+                res.json({success:true,course:result})
             } catch (error) {
                 console.log(error);
                 

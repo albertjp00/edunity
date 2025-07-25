@@ -10,6 +10,7 @@ const AddCourse = () => {
   const [form, setForm] = useState({
     title: '',
     description: '',
+    skills:[],
     price: '',
     thumbnail: '',
     modules: [],
@@ -32,6 +33,18 @@ const AddCourse = () => {
     setForm({ ...form, modules: updatedModules });
   };
 
+  const handleSkillChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setForm({ ...form, skills: [...form.skills, value] });
+    } else {
+      setForm({ ...form, skills: form.skills.filter(skill => skill !== value) });
+    }
+  };
+
+
+
   const validateForm = () => {
     if (!form.title.trim() || !form.description.trim() || !form.price) {
       toast.error('Please fill all course details.');
@@ -52,7 +65,7 @@ const AddCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    // if (!validateForm()) return;
 
     try {
       const instructorId = localStorage.getItem('instructor');
@@ -61,6 +74,7 @@ const AddCourse = () => {
       formData.append('instructorId', instructorId);
       formData.append('title', form.title);
       formData.append('description', form.description);
+      formData.append('skills', JSON.stringify(form.skills));
       formData.append('price', form.price);
       formData.append('thumbnail', form.thumbnail);
       formData.append('modules', JSON.stringify(form.modules));
@@ -88,6 +102,34 @@ const AddCourse = () => {
 
       <label>Description</label>
       <textarea name="description" placeholder="Course Description" onChange={handleChange}></textarea>
+
+      <label>Skills</label>
+        <div className="skills-checkbox-group">
+          {["React", "HTML", "CSS", "JavaScript", "Node.js"].map((skill) => (
+            <label key={skill} className="skill-checkbox">
+              <input
+                type="checkbox"
+                value={skill}
+                checked={form.skills.includes(skill)}
+                onChange={handleSkillChange}
+              />
+              {skill}
+            </label>
+          ))}
+        </div>
+
+        {/* Show selected skills */}
+        {form.skills.length > 0 && (
+          <div className="selected-skills">
+            <p><strong>Selected Skills:</strong></p>
+            <ul>
+              {form.skills.map((skill, i) => (
+                <li key={i}>{skill}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
 
       <label>Price</label>
       <input name="price" placeholder="Price" type="number" onChange={handleChange} />

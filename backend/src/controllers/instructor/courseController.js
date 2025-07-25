@@ -7,15 +7,17 @@ const courseService = require('../../services/instructor/courseServices')
         try {
 
             const file = req.file.filename
-            // console.log(req.file);
+            console.log('add course');
             
             const courseData = {
                         ...req.body,
                         thumbnail : file,
+                        skills:JSON.parse(req.body.skills),
                         modules: JSON.parse(req.body.modules),
             }
             
-            console.log('course controller',courseData);
+            
+            // console.log('course controller',courseData);
 
             
             
@@ -36,13 +38,18 @@ const courseService = require('../../services/instructor/courseServices')
         }
     }
 
+
+
 const editCourse = async (req, res) => {
   try {
     const id = req.query.id;
-    console.log(req.body);
-    
+    console.log('edit course ');
+
+
+
     const courseData = {
       ...req.body,
+      skills:JSON.parse(req.body.skills),
       modules: JSON.parse(req.body.modules),
     };
 
@@ -50,7 +57,7 @@ const editCourse = async (req, res) => {
       courseData.thumbnail = req.file.filename;
     }
 
-    console.log('edit course controller', courseData);
+    // console.log('edit course controller', courseData);
 
     const updated = await courseService.updateCourse(courseData, id);
 
@@ -74,7 +81,7 @@ const editCourse = async (req, res) => {
             console.log('get Courses ');
             
             const data = await courseService.fetchCourses(token)
-            console.log(data);
+            // console.log(data);
             
 
             res.json({success:true,course:data})

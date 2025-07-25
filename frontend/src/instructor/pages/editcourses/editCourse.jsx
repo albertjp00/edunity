@@ -11,6 +11,7 @@ const EditCourse = () => {
   const [form, setForm] = useState({
     title: '',
     description: '',
+    skills:[],
     price: '',
     thumbnail: '',
     modules: [],
@@ -55,6 +56,17 @@ const EditCourse = () => {
     return true;
   };
 
+
+    const handleSkillChange = (e) => {
+        const { value, checked } = e.target;
+
+        if (checked) {
+        setForm({ ...form, skills: [...form.skills, value] });
+        } else {
+        setForm({ ...form, skills: form.skills.filter(skill => skill !== value) });
+        }
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,6 +76,7 @@ const EditCourse = () => {
       const formData = new FormData();
       formData.append('title', form.title);
       formData.append('description', form.description);
+      formData.append('skills', JSON.stringify(form.skills));
       formData.append('price', form.price);
 
       if (form.thumbnail instanceof File) {
@@ -92,6 +105,8 @@ const EditCourse = () => {
     try {
       const res = await axios.get(`http://localhost:4000/instructor/courseDetails?id=${id}`);
       if (res.data.success) {
+        console.log(res.data.course);
+        
         setForm(res.data.course);
       }
     } catch (error) {
@@ -112,6 +127,33 @@ const EditCourse = () => {
 
       <label>Description</label>
       <textarea name="description" placeholder="Course Description" onChange={handleChange} value={form.description}></textarea>
+
+      <label>Skills</label>
+        <div className="skills-checkbox-group">
+        {["React", "HTML", "CSS", "JavaScript", "Node.js"].map((skill) => (
+            <label key={skill} className="skill-checkbox">
+            <input
+                type="checkbox"
+                value={skill}
+                checked={form.skills.includes(skill)}
+                onChange={handleSkillChange}
+            />
+            {skill}
+            </label>
+        ))}
+        </div>
+
+        {form.skills.length > 0 && (
+        <div className="selected-skills">
+            <p><strong>Selected Skills:</strong></p>
+            <ul>
+            {form.skills.map((skill, i) => (
+                <li key={i}>{skill}</li>
+            ))}
+            </ul>
+        </div>
+        )}
+
 
       <label>Price</label>
       <input name="price" placeholder="Price" type="number" onChange={handleChange} value={form.price} />

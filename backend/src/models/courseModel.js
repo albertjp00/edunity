@@ -17,6 +17,10 @@ const CourseSchema = new mongoose.Schema({
 
   price: Number,
 
+  skills:{
+    type:Array
+  },
+
   modules: [
 
     {

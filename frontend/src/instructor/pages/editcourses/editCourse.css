@@ -5,3 +5,23 @@
   border-radius: 8px;
   background: #f9f9f9;
 }
+
+
+.skills-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.skill-checkbox {
+  background: #f3f3f3;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.selected-skills ul {
+  margin: 0;
+  padding-left: 20px;
+}
