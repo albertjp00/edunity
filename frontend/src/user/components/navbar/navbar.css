@@ -9,8 +9,16 @@
   top: 0;
   z-index: 100;
 }
-.logo-image{
-    width: 40px;
+
+.logo{
+  display: flex;
+  align-items: center;
+  
+}
+
+.logo img{
+    width: 50px;
+    margin-right: 10px;
 }
 
 .logout-btn {
@@ -30,6 +38,23 @@
   cursor: pointer;
   padding: 5px;
 }
+
+.profile-section{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-bar {
+  flex: 1;
+  margin: 0 20px;
+  max-width: 400px;
+}
+
+
+
+
+
 
 @media (max-width: 768px) {
   .hamburger {

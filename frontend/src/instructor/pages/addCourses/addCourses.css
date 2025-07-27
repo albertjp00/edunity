@@ -76,3 +76,21 @@
   padding-left: 20px;
   margin: 5px 0;
 }
+
+/* Specific style for level dropdown */
+.add-course-form .level {
+  background-color: #eef6ff;
+  border-color: #007bff;
+  color: #003366;
+  font-weight: 500;
+  margin: 30px;
+}
+
+.level{
+  width: 100px;
+  height: 30px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+

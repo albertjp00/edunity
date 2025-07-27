@@ -13,6 +13,7 @@ const AddCourse = () => {
     skills:[],
     price: '',
     thumbnail: '',
+    level:'Beginner',
     modules: [],
   });
 
@@ -76,6 +77,7 @@ const AddCourse = () => {
       formData.append('description', form.description);
       formData.append('skills', JSON.stringify(form.skills));
       formData.append('price', form.price);
+      formData.append('level',form.level)
       formData.append('thumbnail', form.thumbnail);
       formData.append('modules', JSON.stringify(form.modules));
 
@@ -130,7 +132,22 @@ const AddCourse = () => {
           </div>
         )}
 
+        <label htmlFor="level">Course Level</label>
+        <select
+          className="level"
+          name="level"
+          value={form.level}
+          onChange={handleChange}
+          required
+        >
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
 
+
+
+      <br/>
       <label>Price</label>
       <input name="price" placeholder="Price" type="number" onChange={handleChange} />
 

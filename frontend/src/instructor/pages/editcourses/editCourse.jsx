@@ -14,6 +14,7 @@ const EditCourse = () => {
     skills:[],
     price: '',
     thumbnail: '',
+    level:'',
     modules: [],
   });
 
@@ -70,7 +71,7 @@ const EditCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    // if (!validateForm()) return;
 
     try {
       const formData = new FormData();
@@ -78,6 +79,7 @@ const EditCourse = () => {
       formData.append('description', form.description);
       formData.append('skills', JSON.stringify(form.skills));
       formData.append('price', form.price);
+      formData.append('level',form.level)
 
       if (form.thumbnail instanceof File) {
         formData.append('thumbnail', form.thumbnail);
@@ -154,7 +156,20 @@ const EditCourse = () => {
         </div>
         )}
 
+        <label htmlFor="level">Course Level</label>
+        <select
+          className="level"
+          name="level"
+          value={form.level}
+          onChange={handleChange}
+          required
+        >
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
 
+        <br/>
       <label>Price</label>
       <input name="price" placeholder="Price" type="number" onChange={handleChange} value={form.price} />
 

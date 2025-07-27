@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import profilePic from './../../../assets/profilePic.png'
 
-import './userProfile.css'
 
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import './userProfile.css'
 
 
 
@@ -54,8 +54,13 @@ const ProfilePage = () => {
           className="profile-avatar"
         />
         <h2>{user.name}</h2>
+        <p>{user.bio}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Role:</strong> student</p>
+        <p><strong>Gender:</strong>{user.gender}</p>
+        <p><strong>DOB:</strong>{user.dob}</p>
+        <p><strong>Location:</strong>{user.location}</p>
+        <p><strong>Phone:</strong>{user.phone}</p>
 
         <div className="btn-edit">
           <Link to='/user/editProfile'>

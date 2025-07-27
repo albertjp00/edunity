@@ -1,4 +1,15 @@
 
+.logo{
+  display: flex;
+  align-items: center;
+  
+}
+
+.logo img{
+    width: 50px;
+    margin-right: 10px;
+}
+
 
 .profile-img{
     width: 40px;

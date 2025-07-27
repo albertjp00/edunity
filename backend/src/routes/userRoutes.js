@@ -8,6 +8,7 @@ const path = require('path')
 const multer = require('multer');
 const { forgotPassword, verifyOtpPass, resetPassword } = require("../controllers/user/forgotPass");
 const { getCourses, courseDetails, buyCourse, getMyCourses, viewMyCourse } = require("../controllers/user/courseController");
+const { getInstructotDetails } = require("../controllers/user/getInstructors");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -49,6 +50,7 @@ router.put('/resetPassword',resetPassword)
 
 router.get('/getCourses',getCourses)
 router.get('/courseDetails',courseDetails)
+router.get('/getInstructors',getInstructotDetails)
 
 router.post('/buyCourse',upload.none(),buyCourse)
 

@@ -21,6 +21,10 @@ const CourseSchema = new mongoose.Schema({
     type:Array
   },
 
+  level:{
+    type:String
+  },
+
   modules: [
 
     {

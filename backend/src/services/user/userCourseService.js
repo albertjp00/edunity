@@ -5,17 +5,34 @@ const Instructor = require('../../models/instructorModel')
 
 
 
-const fetchCourses = async (token)=>{
-    try {
+const fetchCourses = async (page = 1, limit = 6) => {
+  try {
+    const skip = (page - 1) * limit;
 
-        const courses = await Course.find({})   
+    const [courses, total, skillsAgg] = await Promise.all([
+      Course.find().skip(skip).limit(limit),
+      Course.countDocuments(),
+      Course.aggregate([
+        { $unwind: "$skills" },
+        { $group: { _id: null, uniqueSkills: { $addToSet: "$skills" } } },
+        { $project: { _id: 0, uniqueSkills: 1 } }
+      ])
+    ]);
 
-        return courses
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
+    const skills = skillsAgg[0]?.uniqueSkills || [];
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      courses,
+      skills,
+      totalPages,
+      currentPage: page
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 const getDetails = async (id)=>{

@@ -6,20 +6,28 @@ const userCourseService = require('../../services/user/userCourseService')
 
 
 
-    const getCourses = async (req,res)=>{
+        const getCourses = async (req, res) => {
         try {
             console.log('get Courses user');
-            
-            const data = await userCourseService.fetchCourses()
-            console.log(data);
-            
 
-            res.json({success:true,course:data})
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 6;
+
+            const data = await userCourseService.fetchCourses(page, limit);
+
+            res.json({
+            success: true,
+            course: data.courses,
+            skills: data.skills,
+            totalPages: data.totalPages,
+            currentPage: data.currentPage
+            });
         } catch (error) {
             console.log(error);
-            
+            res.status(500).json({ success: false, message: "Failed to get courses" });
         }
-    }
+        };
+
 
 
 

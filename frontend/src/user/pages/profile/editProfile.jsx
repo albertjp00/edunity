@@ -11,11 +11,16 @@ const EditProfile = () => {
     const navigate = useNavigate()
 
   const [data, setData] = useState({
-    name: '',
-    email: '',
-    // number: '',
-    profileImage: '',
-  });
+  name: '',
+  email: '',
+  phone: '',
+  bio: '',
+  location: '',
+  dob: '',
+  gender: '',
+  profileImage: '',
+});
+
   const [selectedFile, setSelectedFile] = useState(null);
 
   const validate = ()=>{
@@ -40,6 +45,8 @@ const EditProfile = () => {
   }
 
   const handleChange = (e) => {
+    console.log(data);
+    
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
@@ -60,7 +67,12 @@ const EditProfile = () => {
 
     formData.append('name', data.name);
     formData.append('email', data.email);
-    // formData.append('number', data.number);
+    formData.append('phone', data.phone);
+    formData.append('bio', data.bio);
+    formData.append('location', data.location);
+    formData.append('dob', data.dob);
+    formData.append('gender', data.gender);
+
     if (selectedFile) {
       formData.append('profileImage', selectedFile);
     }
@@ -140,16 +152,53 @@ const EditProfile = () => {
           onChange={handleChange}
           placeholder="Enter Name"
         />
-        {/* <label>Phone Number</label>
+
+        <label>Phone Number</label>
         <input
           type="text"
-          name="number"
-          value={data.number}
+          name="phone"
+          value={data.phone}
           onChange={handleChange}
-          placeholder="Enter Mobile Number"
-        /> */}
-      </div>
+          placeholder="Enter Phone Number"
+        />
 
+        <label>Bio</label>
+        <textarea
+          name="bio"
+          value={data.bio}
+          onChange={handleChange}
+          placeholder="Write a short bio"
+        />
+
+        <label>Location</label>
+        <input
+          type="text"
+          name="location"
+          value={data.location}
+          onChange={handleChange}
+          placeholder="Enter Location"
+        />
+
+        <label>Date of Birth</label>
+        <input
+          type="date"
+          name="dob"
+          value={data.dob}
+          onChange={handleChange}
+        />
+
+        <label>Gender</label>
+        <select
+          name="gender"
+          value={data.gender}
+          onChange={handleChange}
+        >
+          <option value="">Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+
+        </div>
       <div className="submit-btn">
         <button type="submit">Save Changes</button>
       </div>

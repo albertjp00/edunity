@@ -2,6 +2,8 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import profileImage from '../../../assets/profilePic.png'
 import './navbar.css'
+import logo from '../../../assets/logo.png'
+
 
 
 
@@ -21,6 +23,7 @@ const Navbar = () => {
   return (
     <div className='navbar'>
       <div className='logo'>
+        <img src={logo} alt="" />
         <p>EDUNITY</p>
       </div>
     

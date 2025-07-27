@@ -66,7 +66,7 @@ const CourseDetails = () => {
             <div className="highlight-row">
                 
                 <div className="highlight-item">
-                <p>🧑‍🎓 <strong>Beginner level</strong></p>
+                <p>🧑‍🎓 <strong>{course.level} level</strong></p>
                 <span>No prior experience required</span>
                 </div>
                 <div className="highlight-item">
