@@ -21,7 +21,7 @@ const InstructorsAdmin = () => {
   },[])
   return (
     <div className='instructor-list'>
-      <h2>Users List</h2>
+      <h2>Instructors List</h2>
 
       <table>
         <thead>

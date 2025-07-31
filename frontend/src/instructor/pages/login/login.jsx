@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useState,useEffect } from 'react'
 import './login.css'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const InstructorLogin = () => {
 
@@ -29,9 +30,17 @@ const InstructorLogin = () => {
       } else {
         console.log("Login failed")
       }
-    } catch (error) {
-      console.error("Error logging in:", error)
-    }
+    }  catch (error) {
+        console.error("Error logging in:", error);
+    
+        const message = error.response?.data?.message || "Something went wrong";
+    
+        if (error.response?.status === 403) {
+          toast.warning(message); // "Your account is blocked"
+        } else {
+          toast.error(message);
+        }
+      }
 
     
   }
@@ -79,6 +88,14 @@ const InstructorLogin = () => {
           </div>
           
         </form>
+
+        <div className="login-links">
+        
+        <p>
+          Don’t have an account?{' '}
+          <Link to="/user/register" className='link'>Register</Link>
+        </p>
+      </div>
       </div>
     </div>
   )

@@ -37,16 +37,27 @@ const fetchCourses = async (page = 1, limit = 6) => {
 
 const getDetails = async (id)=>{
   try {
-
-    const course = await Course.findById(id)
-    const instructor = await Instructor.findById(course.instructorId)
-    console.log('instuc' , instructor);
     
-    const data = {
-        course,
-        instructor
+    const course = await Course.findById(id)
+
+    let hasAccess = false
+    const myCourse = await MyCourse.findOne({'course.id':id})
+    console.log('mycCoure',myCourse);
+    
+    if(myCourse){
+        hasAccess = true
     }
-    console.log('course details services ',data);
+    const instructor = await Instructor.findById(course.instructorId)
+    console.log('instuc');
+    
+    return {
+        course,
+        instructor,
+        hasAccess,
+        completedModules: myCourse?.completedModules || []
+        };
+
+    console.log('course details services ');
     
     return data
   } catch (error) {
@@ -77,6 +88,9 @@ const buyCourse = async (userToken, courseId) => {
         modules: course.modules,
       }
     });
+
+    console.log('buying done ----- ',myCourse.course.modules );
+    
 
     return myCourse;
   } catch (error) {
@@ -114,5 +128,24 @@ const viewCourse = async (id)=>{
     }
 }
 
+const updateProgress = async(courseId,moduleTitle)=>{
+    try {
+        const course = await MyCourse.findOne({'course.id':courseId});
 
-module.exports = {fetchCourses, getDetails , buyCourse ,myCourses ,viewCourse}
+  if (!course.progress) {
+    course.progress = { completedModules: [] };
+  }
+
+  if (!course.progress.completedModules.includes(moduleTitle)) {
+    course.progress.completedModules.push(moduleTitle);
+    await course.save();
+    return true
+  }
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
+module.exports = {fetchCourses, getDetails , buyCourse ,myCourses ,viewCourse ,updateProgress}

@@ -20,4 +20,33 @@ const sendOtp = async (to, otp) => {
   });
 };
 
-module.exports = sendOtp;
+
+const kycRejectMail = async (email) => {
+  try {
+    await transporter.sendMail({
+      from: `"Edunity" <${process.env.EMAIL_USER}>`,
+      to: email, // 🛠️ fixed 'email' field to 'to'
+      subject: "KYC Rejected - Edunity",
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: red;">KYC Verification Rejected</h2>
+          <p>Dear Instructor,</p>
+          <p>We regret to inform you that your KYC verification has been rejected after review.</p>
+          <p>Please ensure the following:</p>
+          <ul>
+            <li>Upload clear and valid ID and address proof.</li>
+            <li>Ensure details match your profile.</li>
+          </ul>
+          <p>You may try submitting again after correcting the above issues.</p>
+          <br>
+          <p>Regards,<br>Team Edunity</p>
+        </div>
+      `
+    });
+
+  } catch (error) {
+    console.log('Email sending failed:', error);
+  }
+};
+
+module.exports = {sendOtp , kycRejectMail};

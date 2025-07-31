@@ -102,7 +102,8 @@ const verifyOtp = async ({ email, otp }) => {
 
 // login ---------
 const login = async ({ email, password }) => {
-    console.log('auth service  instructor');
+    try {
+      console.log('auth service  instructor');
     
   const instructor = await Instructor.findOne({ email });
   console.log('instructor',instructor);
@@ -117,6 +118,9 @@ const login = async ({ email, password }) => {
       expiresIn: "1d"
     });
     return {instructor,token}
+    } catch (error) {
+      throw error
+    }
 };
 
 

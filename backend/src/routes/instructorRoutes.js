@@ -41,7 +41,7 @@ instructorRoute.post('/resendOtp',resendOtpRequest)
 instructorRoute.post('/login',loginInstructor)
 
 instructorRoute.get('/profile',profileDetails)
-instructorRoute.put('/editProfile',upload.single('profileImage'),profileEdit)
+instructorRoute.put('/profile',upload.single('profileImage'),profileEdit)
 instructorRoute.post('/kycSubmit',
   upload.fields([
     { name: 'idProof', maxCount: 1 },

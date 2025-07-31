@@ -6,7 +6,7 @@ const myCourseSchema = new mongoose.Schema({
     required: true,
   },
   course: {
-    id:String,
+    id: String,
     title: String,
     description: String,
     price: String,
@@ -14,20 +14,22 @@ const myCourseSchema = new mongoose.Schema({
     modules: [
       {
         title: String,
-        lessons: [
-          {
-            title: String,
-            videoUrl: String,
-            content: String
-          }
-        ]
-      }
+        videoUrl: String,
+        content: String,
+      },
     ],
   },
+
+  progress: {
+  completedModules: [String], // Store module titles or IDs
+},
+
+
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
+
 
 module.exports = mongoose.model('MyCourse', myCourseSchema);

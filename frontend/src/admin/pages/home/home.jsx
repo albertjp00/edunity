@@ -5,6 +5,8 @@ import { useState } from 'react'
 import './home.css'
 import InstructorsAdmin from '../instructors/adminInstructors'
 import UsersAdmin from '../users/AdminUsers'
+import Sidebar from '../../components/sidebar/sidebar'
+import { Route, Routes } from 'react-router-dom'
 
 const AdminHome = () => {
 
@@ -15,21 +17,23 @@ const AdminHome = () => {
         
         <Navbar />
             <div className='admin-container'>
-                <div className="sidebar">
-                    <ul>
-                        <li onClick={()=>setSelect('dashboard')}>Dashboard</li>
-                        <li onClick={()=>setSelect('users')}>Users</li>
-                        <li onClick={()=>setSelect('instructors')}>Instructors</li>
-                    </ul>
-                    
-                    
+                <Sidebar />
+
+                <div className="a">
+
+                    <Routes>
+                        <Route path='dashboard' element={<Dashboard />} />
+                        <Route path='users' element={<UsersAdmin />}/>
+                        <Route path='instructors' element={<InstructorsAdmin />}/>
+                    </Routes>
                 </div>
                 
-                <div className="main-content">
+                {/* <div className="main-content">
+                    
                     {select == 'dashboard' && <Dashboard />}
                     {select == 'users' && <UsersAdmin />}
                     {select == 'instructors' && <InstructorsAdmin />}
-                </div>
+                </div> */}
         
             </div>
     </div>

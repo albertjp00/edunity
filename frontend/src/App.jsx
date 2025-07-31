@@ -101,8 +101,7 @@ function App() {
 
               // {/* admin  */}
               <Route  path='/admin/login' element={<AdminLogin />}/>
-              <Route path='/admin/home' element={<AdminHome />}/>
-              <Route path='/admin/dashboard' element={<Dashboard />}/>
+              <Route path='/admin/*' element={<AdminHome />}/>
               <Route path='/admin/viewKyc/:id' element={<ViewKYC />}/>
 
             

@@ -83,7 +83,7 @@ return (
         </p>
         <p>
           Don’t have an account?{' '}
-          <Link to="/user/register" className='link'>Register</Link>
+          <Link to="/instructor/register" className='link'>Register</Link>
         </p>
       </div>
     </div>

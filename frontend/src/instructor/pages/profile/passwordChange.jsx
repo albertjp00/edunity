@@ -64,8 +64,8 @@ const PasswordChange = () => {
         setOldPassword('');
       setNewPassword('');
       setConfirmPassword('');
-
-        navigate('/instructor/profile')
+        localStorage.removeItem('instructor')
+        navigate('/instructor/login')
       
       }else{
         toast.error(response.data.message)

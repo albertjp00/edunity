@@ -79,7 +79,7 @@ const EditProfile = () => {
 
     try {
       const response = await axios.put(
-        'http://localhost:4000/user/editProfile',
+        'http://localhost:4000/user/profile',
         formData,
         {
           headers: {

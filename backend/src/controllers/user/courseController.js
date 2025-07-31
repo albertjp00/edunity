@@ -95,6 +95,22 @@ const userCourseService = require('../../services/user/userCourseService')
         }
     }
 
+    const updateProgress = async (req, res) => {
+  try {
+    const { courseId, moduleTitle } = req.body;
+    console.log('update progress' , courseId , moduleTitle);
+    
+
+  const update = await userCourseService.updateProgress(courseId,moduleTitle)
+
+  res.json({ success: true, message: 'Progress updated' });
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
+
+
 module.exports = {getCourses , courseDetails , buyCourse ,getMyCourses ,
-    viewMyCourse
+    viewMyCourse , updateProgress
 }

@@ -65,7 +65,8 @@ const ChangePassword = () => {
       setNewPassword('');
       setConfirmPassword('');
 
-        navigate('/user/profile')
+      localStorage.removeItem('token')
+        navigate('/user/login')
       
       }else{
         toast.error(response.data.message)

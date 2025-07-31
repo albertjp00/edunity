@@ -1,3 +1,4 @@
+const { kycRejectMail } = require('../../emails/sendOtp')
 const Instructor = require('../../models/instructorModel')
 const KYC = require('../../models/kycModel')
 
@@ -49,10 +50,15 @@ const reject = async (id)=>{
     try {
         const update = await Instructor.findByIdAndUpdate(id,{KYCstatus:'rejected'})
 
+
+
         // const del = await KYC.findOneAndDelete({instructorId:id})
 
         // const ins = await Instructor.findByIdAndUpdate(id,{KYCApproved:true})
         // console.log(ins);
+
+          let defaultEmail = 'albertjpaul@gmail.com'
+          await kycRejectMail(defaultEmail);
         
         if(update){
             return true

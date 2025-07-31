@@ -78,7 +78,7 @@ const editCourse = async (req, res) => {
     const getCourse = async (req,res)=>{
         try {
             const token = req.query.id
-            console.log('get Courses ');
+            console.log('get Courses ',token);
             
             const data = await courseService.fetchCourses(token)
             // console.log(data);

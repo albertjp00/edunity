@@ -1,16 +1,16 @@
 import axios from "axios";
 
 
-const api = axios.create({
+const instructorApi = axios.create({
     baseURL :  'http://localhost:4000',
     withCredentials : true
 })
 
 
 
-api.interceptors.request.use(
+instructorApi.interceptors.request.use(
     (config) =>{
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('instructor');
         if(token){
             config.headers.Authorization = `Bearer ${token}`    
         }
@@ -23,7 +23,7 @@ api.interceptors.request.use(
 
 
 // to Handle global response errors
-api.interceptors.response.use(
+instructorApi.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
@@ -37,4 +37,4 @@ api.interceptors.response.use(
 );
 
 
-export default api
+export default instructorApi

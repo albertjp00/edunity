@@ -1,0 +1,106 @@
+/* Main wrapper to fill the viewport height */
+.edit {
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start; /* Align left */
+  align-items: flex-start;     /* Align top */
+  padding: 40px 50px;
+  background-color: #f7f9fc;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Container for the form card */
+.edit-container {
+  max-width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.3s ease-in-out;
+  text-align: left;
+}
+
+/* Title styling */
+.edit-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form layout */
+.edit-form {
+  width: 100%;
+}
+
+/* Input fields layout */
+.edit-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-inputs label {
+  font-weight: 500;
+  color: #444;
+}
+
+.edit-inputs input,
+.edit-inputs select,
+.textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Profile image */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #007bff;
+  margin-bottom: 20px;
+}
+
+/* Submit button layout */
+.submit-btn {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.submit-btn button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn button:hover {
+  background-color: #0056b3;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

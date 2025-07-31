@@ -7,7 +7,7 @@ const { profile, editProfile, changePassword } = require("../controllers/user/pr
 const path = require('path')
 const multer = require('multer');
 const { forgotPassword, verifyOtpPass, resetPassword } = require("../controllers/user/forgotPass");
-const { getCourses, courseDetails, buyCourse, getMyCourses, viewMyCourse } = require("../controllers/user/courseController");
+const { getCourses, courseDetails, buyCourse, getMyCourses, viewMyCourse, updateProgress } = require("../controllers/user/courseController");
 const { getInstructotDetails } = require("../controllers/user/getInstructors");
 
 const storage = multer.diskStorage({
@@ -27,7 +27,7 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(new Error('Only image files are allowed!'), false);
   }
-};  
+};
 
 const upload = multer({
   storage: storage,
@@ -37,24 +37,25 @@ const upload = multer({
 
 router.post("/register", registerRequest);
 router.post("/login", loginUser);
-router.post('/verifyOtp',verifyOtpAndRegister)
+router.post('/verifyOtp', verifyOtpAndRegister)
 
-router.get('/profile',profile)
-router.put('/editProfile',upload.single('profileImage'),editProfile)
-router.put('/changePassword',changePassword)
+router.get('/profile', profile)
+router.put('/profile', upload.single('profileImage'), editProfile)
+router.put('/changePassword', changePassword)
 
-router.post('/forgot-password',forgotPassword)
-router.post('/verify-otp',verifyOtpPass)
-router.put('/resetPassword',resetPassword)
+router.post('/forgot-password', forgotPassword)
+router.post('/verify-otp', verifyOtpPass)
+router.put('/resetPassword', resetPassword)
 
 
-router.get('/getCourses',getCourses)
-router.get('/courseDetails',courseDetails)
-router.get('/getInstructors',getInstructotDetails)
+router.get('/getCourses', getCourses)
+router.get('/courseDetails', courseDetails)
+router.get('/getInstructors', getInstructotDetails)
 
-router.post('/buyCourse',upload.none(),buyCourse)
+router.post('/buyCourse', upload.none(), buyCourse)
 
-router.get('/myCourses',getMyCourses)
-router.get('/viewMyCourse',viewMyCourse)
+router.get('/myCourses', getMyCourses)
+router.get('/viewMyCourse', viewMyCourse)
+router.post('/updateProgress', updateProgress)
 
 module.exports = router

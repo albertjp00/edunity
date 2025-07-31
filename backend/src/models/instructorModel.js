@@ -34,6 +34,14 @@ const InstructorSchema = new mongoose.Schema({
         type:String,
         enum : ["pending","verified","rejected","notApplied"],
         default : "notApplied"
+    },
+
+    work:{
+        type : String
+    },
+
+    education :{
+        type:String
     }
 
 

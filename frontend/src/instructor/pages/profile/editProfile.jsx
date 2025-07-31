@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './editProfile.css'
+import './instructorEditProfile.css'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import profilePic from './../../../assets/profilePic.png'
@@ -10,13 +10,16 @@ const ProfileEdit = () => {
 
     const navigate = useNavigate()
 
-    const [data,setData] = useState({
-        name : '',
-        email : '',
-        expertise : '',
-        bio : '',
-        image : ''
-    })
+    const [data, setData] = useState({
+      name: '',
+      email: '',
+      expertise: '',
+      bio: '',
+      image: '',
+      work: '',
+      education: '',
+    });
+
 
     const [selectedFile,setSelectedFile] = useState(null)
 
@@ -39,11 +42,14 @@ const ProfileEdit = () => {
          formData.append('name', data.name);
         formData.append('expertise', data.expertise);
           formData.append('bio', data.bio);
+          formData.append('work', data.work);
+          formData.append('education', data.education);
+
     if (selectedFile) {
       formData.append('profileImage', selectedFile);
     }
          
-        const response = await axios.put('http://localhost:4000/instructor/editProfile',
+        const response = await axios.put('http://localhost:4000/instructor/profile',
             formData,{
             headers:{
                 Authorization:`Bearer ${token}`
@@ -127,15 +133,36 @@ const ProfileEdit = () => {
         /> */}
         
         <label>Enter Bio</label>
-        <input
-          type="text"
-          name="bio"
-          value={data.bio}
-          onChange={handleChange}
-          placeholder="Enter your bio"
-        />
-      </div>
+          <textarea
+            name="bio"
+            value={data.bio}
+            onChange={handleChange}
+            placeholder="Enter your bio"
+            rows={4}
+            className="textarea"
+          />
 
+      
+
+      <label>Work Experience</label>
+      <input
+        type="text"
+        name="work"
+        value={data.work}
+        onChange={handleChange}
+        placeholder="e.g. 5 years in web development"
+      />
+
+      <label>Education</label>
+      <input
+        type="text"
+        name="education"
+        value={data.education}
+        onChange={handleChange}
+        placeholder="e.g. B.Tech in Computer Science"
+      />
+
+      <label>Select Expertise</label>
       <select
       className="input"
       type=""
@@ -153,6 +180,9 @@ const ProfileEdit = () => {
         <option value="Cybersecurity">Cybersecurity</option>
         <option value="Marketing">Marketing</option>
       </select>
+
+      
+      </div>
 
       <div className="submit-btn">
         <button type="submit">Save Changes</button>

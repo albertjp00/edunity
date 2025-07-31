@@ -9,6 +9,8 @@ const CourseDetailsUser = () => {
   const [course, setCourse] = useState(null);
   const [hasAccess, setHasAccess] = useState(false);
   const [instructor, setInstructor] = useState(null);
+  const [completedModules, setCompletedModules] = useState([]);
+
   const navigate = useNavigate();
 
   const fetchCourse = async () => {
@@ -19,7 +21,9 @@ const CourseDetailsUser = () => {
 
       setCourse(res.data.course.course);
       setInstructor(res.data.course.instructor);
-      setHasAccess(res.data.hasAccess);
+      setHasAccess(res.data.course.hasAccess);
+      setCompletedModules(res.data.course.completedModules || []);
+
     } catch (err) {
       console.error("Error fetching course:", err);
     }
@@ -134,20 +138,7 @@ const CourseDetailsUser = () => {
                     📘 {module.title || `Module ${idx + 1}`}
                 </summary>
 
-                {!hasAccess ? (
-                    <p className="locked-message">🔒 Purchase to view lessons and content.</p>
-                ) : module.lessons.length > 0 ? (
-                    <ul className="lesson-list">
-                    {module.lessons.map((lesson, i) => (
-                        <li key={i} className="lesson-item">
-                        <strong>{lesson.title}</strong><br />
-                        <small>{lesson.content}</small>
-                        </li>
-                    ))}
-                    </ul>
-                ) : (
-                    <p>No lessons in this module.</p>
-                )}
+                
                 </details>
             </div>
             ))}
