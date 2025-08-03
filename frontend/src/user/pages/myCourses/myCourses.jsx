@@ -37,6 +37,7 @@ const MyCourses = () => {
 
  return (
   <div>
+    <Navbar />
     
     <div className="course-container">
       <h2>My Courses</h2>

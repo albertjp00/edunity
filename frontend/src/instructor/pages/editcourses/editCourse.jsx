@@ -3,6 +3,7 @@ import axios from 'axios';
 import './editCourse.css';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
+import Navbar from '../../components/navbar/navbar';
 
 const EditCourse = () => {
   const { id } = useParams();
@@ -120,99 +121,108 @@ const EditCourse = () => {
     fetchData();
   }, []);
 
+
   return (
-    <form className="add-course-form" onSubmit={handleSubmit}>
-      <h2>Edit Course</h2>
+    <>
+      <Navbar /> 
 
-      <label>Course Title</label>
-      <input name="title" placeholder="Course Title" onChange={handleChange} value={form.title} />
+      <div className="edit-container">
+        <form className="add-course-form" onSubmit={handleSubmit}>
+          <h2>Edit Course</h2>
 
-      <label>Description</label>
-      <textarea name="description" placeholder="Course Description" onChange={handleChange} value={form.description}></textarea>
+          <label>Course Title</label>
+          <input name="title" placeholder="Course Title" onChange={handleChange} value={form.title} />
 
-      <label>Skills</label>
-        <div className="skills-checkbox-group">
-        {["React", "HTML", "CSS", "JavaScript", "Node.js"].map((skill) => (
-            <label key={skill} className="skill-checkbox">
-            <input
-                type="checkbox"
-                value={skill}
-                checked={form.skills.includes(skill)}
-                onChange={handleSkillChange}
-            />
-            {skill}
-            </label>
-        ))}
-        </div>
+          <label>Description</label>
+          <textarea name="description" placeholder="Course Description" onChange={handleChange} value={form.description}></textarea>
 
-        {form.skills.length > 0 && (
-        <div className="selected-skills">
-            <p><strong>Selected Skills:</strong></p>
-            <ul>
-            {form.skills.map((skill, i) => (
-                <li key={i}>{skill}</li>
+          <label>Skills</label>
+          <div className="skills-checkbox-group">
+            {["React", "HTML", "CSS", "JavaScript", "Node.js"].map((skill) => (
+              <label key={skill} className="skill-checkbox">
+                <input
+                  type="checkbox"
+                  value={skill}
+                  checked={form.skills.includes(skill)}
+                  onChange={handleSkillChange}
+                />
+                {skill}
+              </label>
             ))}
-            </ul>
-        </div>
-        )}
+          </div>
 
-        <label htmlFor="level">Course Level</label>
-        <select
-          className="level"
-          name="level"
-          value={form.level}
-          onChange={handleChange}
-          required
-        >
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-        </select>
+          {form.skills.length > 0 && (
+            <div className="selected-skills">
+              <p><strong>Selected Skills:</strong></p>
+              <ul>
+                {form.skills.map((skill, i) => (
+                  <li key={i}>{skill}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
-        <br/>
-      <label>Price</label>
-      <input name="price" placeholder="Price" type="number" onChange={handleChange} value={form.price} />
+          <label htmlFor="level">Course Level</label>
+          <select
+            className="level"
+            name="level"
+            value={form.level}
+            onChange={handleChange}
+            required
+          >
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
 
-      <label>Thumbnail</label>
-      <input
-        type="file"
-        name="thumbnail"
-        accept="image/*"
-        onChange={(e) => setForm({ ...form, thumbnail: e.target.files[0] })}
-      />
+          <br />
+          <label>Price</label>
+          <input name="price" placeholder="Price" type="number" onChange={handleChange} value={form.price} />
 
-      <hr />
-
-      <h3>Modules</h3>
-      {form.modules.map((module, index) => (
-        <div key={index} className="module-card">
+          <label>Thumbnail</label>
           <input
-            type="text"
-            placeholder="Module Title"
-            value={module.title}
-            onChange={(e) => updateModule(index, 'title', e.target.value)}
+            type="file"
+            name="thumbnail"
+            accept="image/*"
+            onChange={(e) => setForm({ ...form, thumbnail: e.target.files[0] })}
           />
-          <input
-            type="text"
-            placeholder="Video URL"
-            value={module.videoUrl}
-            onChange={(e) => updateModule(index, 'videoUrl', e.target.value)}
-          />
-          <textarea
-            placeholder="Content"
-            value={module.content}
-            onChange={(e) => updateModule(index, 'content', e.target.value)}
-          />
-          <button type="button" onClick={() => removeModule(index)}>Remove Module</button>
-        </div>
-      ))}
 
-      <button type="button" onClick={addModule}>+ Add Module</button>
+          <hr />
 
-      <br /><br />
-      <button className="add-course-btn" type="submit">Save</button>
-    </form>
+          <h3>Modules</h3>
+          {form.modules.map((module, index) => (
+            <div key={index} className="module-card">
+              <input
+                type="text"
+                placeholder="Module Title"
+                value={module.title}
+                onChange={(e) => updateModule(index, 'title', e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Video URL"
+                value={module.videoUrl}
+                onChange={(e) => updateModule(index, 'videoUrl', e.target.value)}
+              />
+              <textarea
+                placeholder="Content"
+                value={module.content}
+                onChange={(e) => updateModule(index, 'content', e.target.value)}
+              />
+              <button type="button" onClick={() => removeModule(index)}>Remove Module</button>
+            </div>
+          ))}
+
+          <button type="button" onClick={addModule}>+ Add Module</button>
+
+          <br /><br />
+          <button className="add-course-btn" type="submit">Save</button>
+        </form>
+      </div>
+    </>
   );
-};
+}
+
+
 
 export default EditCourse;

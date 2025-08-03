@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import './profile.css'
 import axios from 'axios'
 import instructorApi from '../../../api/instructorApi'
+import Navbar from '../../components/navbar/navbar'
+
 
 const Profile = () => {
   const [user, setUser] = useState({})
@@ -37,8 +39,11 @@ const Profile = () => {
   }, [])
 
   return (
-    <div className="profile-container1">
+    <div className="profile">
+      <Navbar />
+      <div className="profile-container1">
       {/* LEFT */}
+      
       <div className="profile-left">
         <div className="profile-card1">
           <div className="user-name-card">
@@ -125,6 +130,7 @@ const Profile = () => {
           )}
         </div>
       </div>
+    </div>
     </div>
   )
 }

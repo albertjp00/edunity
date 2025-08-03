@@ -3,20 +3,17 @@ const User = require('../../models/userModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt')
 
-const getProfile = async (token)=>{
-    try {
+const getProfile = async (userId) => {
+  try {
+    const user = await User.findById(userId)
+    return user;
+  } catch (error) {
+    console.error('Profile service error:', error);
+    throw error;
+  }
+};
 
-        const id = jwt.verify(token,'secret key')
-        // console.log(id.id);
-        
-        const user = await User.findById(id.id)
-        return user
-        
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
+
 
 const editProfile = async (token,data)=>{
     try {

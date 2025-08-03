@@ -3,6 +3,7 @@ import axios from 'axios';
 import './addCourses.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/navbar/navbar';
 
 const AddCourse = () => {
   const navigate = useNavigate();
@@ -96,6 +97,8 @@ const AddCourse = () => {
   };
 
   return (
+    <div className="addCourse">
+      <Navbar />
     <form className="add-course-form" onSubmit={handleSubmit}>
       <h2>Add New Course</h2>
 
@@ -189,6 +192,7 @@ const AddCourse = () => {
       <br /><br />
       <button className="add-course-btn" type="submit">Add Course</button>
     </form>
+    </div>
   );
 };
 

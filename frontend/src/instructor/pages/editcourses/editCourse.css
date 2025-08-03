@@ -1,3 +1,27 @@
+.edit-container {
+  max-width: 900px; /* increased width */
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.add-course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+.module-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background: #f9f9f9;
+  width: 100%; /* makes module card take full form width */
+}
+
+
+
 .module-card {
   border: 1px solid #ccc;
   padding: 1rem;
@@ -33,6 +57,7 @@
   color: #003366;
   font-weight: 500;
   margin: 30px;
+  
 }
 
 .level{

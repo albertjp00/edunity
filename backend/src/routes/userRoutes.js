@@ -9,6 +9,7 @@ const multer = require('multer');
 const { forgotPassword, verifyOtpPass, resetPassword } = require("../controllers/user/forgotPass");
 const { getCourses, courseDetails, buyCourse, getMyCourses, viewMyCourse, updateProgress } = require("../controllers/user/courseController");
 const { getInstructotDetails } = require("../controllers/user/getInstructors");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,7 +40,7 @@ router.post("/register", registerRequest);
 router.post("/login", loginUser);
 router.post('/verifyOtp', verifyOtpAndRegister)
 
-router.get('/profile', profile)
+router.get('/profile', authMiddleware , profile)
 router.put('/profile', upload.single('profileImage'), editProfile)
 router.put('/changePassword', changePassword)
 

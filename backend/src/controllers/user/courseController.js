@@ -70,7 +70,7 @@ const userCourseService = require('../../services/user/userCourseService')
         console.log('my courses ',token);
         
         const result = await userCourseService.myCourses(token)
-        console.log(result);
+        // console.log(result);
         
         res.json({success:true,courses:result})
       } catch (error) {

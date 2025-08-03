@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './CourseDetails.css';
+import Navbar from '../../components/navbar/navbar';
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -43,7 +44,10 @@ const CourseDetails = () => {
   if (!course) return <p>Loading...</p>;
 
   return (
-    <div className="course-detail-page">
+    <div className="details">
+      <Navbar />
+      <div className="course-detail-page">
+      
       <div className="course-title">
         <h2>{course.title}</h2>
         <button onClick={() => handleEdit(course._id)} className="edit-button">
@@ -137,6 +141,7 @@ const CourseDetails = () => {
           <p>No modules found.</p>
         )}
       </div>
+    </div>
     </div>
   );
 };

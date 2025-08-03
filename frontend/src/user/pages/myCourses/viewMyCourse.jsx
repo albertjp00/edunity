@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './viewMyCourse.css';
+import Navbar from '../../components/navbar/navbar';
 
 const ViewMyCourse = () => {
   const { id } = useParams();
@@ -52,6 +53,9 @@ const ViewMyCourse = () => {
   const progressPercent = Math.round((completedCount / totalModules) * 100);
 
   return (
+    <div>
+      <Navbar />
+    
     <div className="course-detail-page">
       <h2>{course.title}</h2>
 
@@ -138,6 +142,7 @@ const ViewMyCourse = () => {
           );
         })}
       </div>
+    </div>
     </div>
   );
 };

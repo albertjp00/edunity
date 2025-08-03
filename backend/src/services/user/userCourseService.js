@@ -108,7 +108,7 @@ const myCourses = async (token) => {
     console.log(decoded);
 
     const courses = await MyCourse.find({ userId: decoded.id });
-    console.log("My Courses:", courses);
+    console.log("My Courses:");
 
     return courses.map(entry => entry.course);
   } catch (error) {

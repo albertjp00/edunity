@@ -6,6 +6,8 @@ import profilePic from './../../../assets/profilePic.png'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './userProfile.css'
+import Navbar from '../../components/navbar/navbar';
+import api from '../../../api/axios';
 
 
 
@@ -22,7 +24,7 @@ const ProfilePage = () => {
   const token = localStorage.getItem('token')
 
   const getProfile  = async  ()=>{
-    const response = await axios.get('http://localhost:4000/user/profile',{
+    const response = await api.get('/user/profile',{  
       headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -69,7 +71,10 @@ const ProfilePage = () => {
   },[])
 
    return (
+    <> 
+    <Navbar />
   <div className="profile-container1">
+    
     <div className="profile-left">
       <div className="profile-card1">
         <div className="user-name-card">
@@ -133,6 +138,7 @@ const ProfilePage = () => {
       </div>
     </div>
   </div>
+  </>
 );
 
   

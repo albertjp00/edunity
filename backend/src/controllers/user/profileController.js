@@ -1,24 +1,26 @@
 
 const profileServices = require('../../services/user/profileServices')
 
-const profile = async (req,res)=>{
-    try {
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
-        console.log(token);
 
-        const userDetails = await profileServices.getProfile(token)
-        console.log(userDetails);
-        
 
-        res.json({success:true,data:userDetails})
+const profile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userDetails = await profileServices.getProfile(userId);
 
-        
-    } catch (error) {
-        console.log(error);
-
+    if (!userDetails) {
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
-}
+
+    res.json({ success: true, data: userDetails });
+  } catch (error) {
+    console.error('Profile controller error:', error);
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+};
+
+
+
 
 const editProfile = async (req,res)=>{
     try {

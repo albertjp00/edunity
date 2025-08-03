@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 
 const api = axios.create({
@@ -30,7 +31,7 @@ api.interceptors.response.use(
       console.log('Unauthorized — redirecting to login...');
       // Optional: handle redirect here
       console.log('redirect to login');
-      
+      window.location.href = '/user/login'
     }
     return Promise.reject(error);
   }

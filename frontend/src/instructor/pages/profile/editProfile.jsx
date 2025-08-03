@@ -4,6 +4,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import profilePic from './../../../assets/profilePic.png'
 import { useNavigate } from 'react-router-dom'
+import Navbar from '../../components/navbar/navbar'
 
 
 const ProfileEdit = () => {
@@ -88,7 +89,10 @@ const ProfileEdit = () => {
 
 
   return (
-    <div className="edit">
+    <div className="editProfile">
+      <Navbar />
+      <div className="edit">
+      
   <div className="edit-container">
     <h2 className="edit-title">Edit Profile</h2>
     
@@ -190,6 +194,7 @@ const ProfileEdit = () => {
     </form>
   </div>
 </div>
+    </div>
 
   )
 }
