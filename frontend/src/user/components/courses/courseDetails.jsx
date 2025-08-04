@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './courseDetails.css';
 import Navbar from '../navbar/navbar';
+import api from '../../../api/axios';
 
 const CourseDetailsUser = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ const CourseDetailsUser = () => {
     formData.append('course', id);
 
     try {
-      const res = await axios.post('http://localhost:4000/user/buyCourse', formData, {
+      const res = await api.post('/user/buyCourse', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

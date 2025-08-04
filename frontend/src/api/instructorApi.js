@@ -30,6 +30,7 @@ instructorApi.interceptors.response.use(
       console.log('Unauthorized — redirecting to login...');
       // Optional: handle redirect here
       console.log('redirect to login');
+      window.location.href = '/instructor/login'
       
     }
     return Promise.reject(error);

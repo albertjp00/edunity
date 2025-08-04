@@ -7,13 +7,12 @@ const kycSubmit = async (req,res)=>{
         const idProof = req.files['idProof']?.[0]
         const addressProof = req.files['addressProof']?.[0]
 
-        const authHeader = req.headers['authorization']
-        const token  = authHeader && authHeader.split(' ')[1]
-        console.log('kyc submit ',idProof,addressProof);
+        const id = req.instructor.id
+        console.log('kyc submit ');
 
 
 
-        const result = await kycServices.kycSubmit(idProof.filename,addressProof.filename,token)
+        const result = await kycServices.kycSubmit(idProof.filename,addressProof.filename,id)
         
         if (result) {
       return res.json({ success: true, message: 'KYC submitted successfully' });

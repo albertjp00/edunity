@@ -3,15 +3,16 @@ const jwt = require('jsonwebtoken')
 const Instructor = require('../../models/instructorModel')
 
 
-const kycSubmit = async (idProof,addressProof,token)=>{
+const kycSubmit = async (idProof,addressProof,id)=>{
     try {
-        const id = jwt.verify(token,'secret key')
-        console.log(id);
         
+        console.log('kyc submit resubmit',id);
         
-        const kyc= await KYC.create({instructorId:id.id,idProof:idProof,addressProof:addressProof})
+        const kyc= await KYC.create({instructorId:id,idProof:idProof,addressProof:addressProof})
 
-        const instructor = await Instructor.findByIdAndUpdate(id.id,{KYCstatus:'pending'})
+        const instructor = await Instructor.findByIdAndUpdate(id,{KYCstatus:'pending'},{new:true})
+        console.log(instructor);
+        
 
         return kyc
 

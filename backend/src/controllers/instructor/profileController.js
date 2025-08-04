@@ -5,11 +5,10 @@ const profileDetails = async (req,res)=>{
     try {
         console.log('profiledetails');
         
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
+        const instructorId = req.instructor.id
         // console.log('instructor token',token);
 
-        const InstructorDetails = await profileServices.getProfile(token)
+        const InstructorDetails = await profileServices.getProfile(instructorId)
         // console.log(InstructorDetails);
         
 
@@ -24,10 +23,9 @@ const profileDetails = async (req,res)=>{
 
 const profileEdit = async (req,res)=>{
     try {
-        const authHeader = req.headers['authorization']
-        const token  = authHeader && authHeader.split(' ')[1]
+        const id = req.instructor.id
 
-        console.log(req.body);
+        console.log('profilr instructor edit');
         
         const file = req.file
         const data = {
@@ -37,7 +35,7 @@ const profileEdit = async (req,res)=>{
             data.profileImage = file.filename || undefined
         }
 
-        const update = await profileServices.editProfile(token,data)
+        const update = await profileServices.editProfile(id,data)
 
         if(update){
             res.json({success:true})

@@ -49,6 +49,7 @@ const verify = async (id)=>{
 const reject = async (id)=>{
     try {
         const update = await Instructor.findByIdAndUpdate(id,{KYCstatus:'rejected'})
+        const deleteKyc = await KYC.findOneAndDelete({instructorId : id})
 
 
 

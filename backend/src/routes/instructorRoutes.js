@@ -7,6 +7,7 @@ const path = require('path')
 const multer = require('multer')
 const { kycSubmit } = require('../controllers/instructor/kycController')
 const { addCourse, getCourse, courseDetails, editCourse } = require('../controllers/instructor/courseController')
+const { instAuthMiddleware } = require('../middleware/authMiddleware')
 
 
 const storage = multer.diskStorage({
@@ -40,9 +41,9 @@ instructorRoute.post('/verifyOtp',verifyOtpAndRegister)
 instructorRoute.post('/resendOtp',resendOtpRequest)
 instructorRoute.post('/login',loginInstructor)
 
-instructorRoute.get('/profile',profileDetails)
-instructorRoute.put('/profile',upload.single('profileImage'),profileEdit)
-instructorRoute.post('/kycSubmit',
+instructorRoute.get('/profile', instAuthMiddleware,profileDetails)
+instructorRoute.put('/profile', instAuthMiddleware ,upload.single('profileImage'),profileEdit)
+instructorRoute.post('/kycSubmit',instAuthMiddleware ,
   upload.fields([
     { name: 'idProof', maxCount: 1 },
     { name: 'addressProof', maxCount: 1 }

@@ -24,8 +24,7 @@ const profile = async (req, res) => {
 
 const editProfile = async (req,res)=>{
     try {
-        const authHeader = req.headers['authorization']
-        const token  = authHeader && authHeader.split(' ')[1]
+        const userId = req.user
         const file = req.file
         console.log('edit req.body',req.body , file);
         
@@ -36,7 +35,7 @@ const editProfile = async (req,res)=>{
             data.profileImage = file.filename || undefined
         }
 
-        const update = await profileServices.editProfile(token,data)
+        const update = await profileServices.editProfile(userId,data)
 
         if(update){
             res.json({success:true})
@@ -53,14 +52,14 @@ const changePassword = async(req,res)=>{
         
         const {oldPassword,newPassword} = req.body
 
+
         console.log('user change password ',oldPassword , newPassword);
 
-        const authHeader = req.headers['authorization']
-        const token  = authHeader && authHeader.split(' ')[1]
+        const userId = req.user.id
 
         
 
-        const update = await profileServices.passwordChange(oldPassword,newPassword,token)
+        const update = await profileServices.passwordChange(oldPassword,newPassword,userId)
 
         if(update){
             res.status(200).json({success:true})
@@ -69,9 +68,15 @@ const changePassword = async(req,res)=>{
         }
 
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({success:false,message:error.message || 'something went wrong'})
-    }
+  console.log(error);
+
+  if (error.response && error.response.data && error.response.data.message) {
+    toast.error(error.response.data.message);
+  } else {
+    toast.error('Something went wrong. Please try again.');
+  }
+}
+
 }
 
 module.exports = {profile,editProfile,changePassword}

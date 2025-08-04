@@ -52,9 +52,10 @@ const userCourseService = require('../../services/user/userCourseService')
         const buyCourse = async(req,res)=>{
             try {
                 const {user,course} = req.body
-                console.log('buy Course user ',user,course);
+                const id = req.user.id
+                console.log('buy Course user ',id,user,course);
                 
-                const result = await userCourseService.buyCourse(user,course)
+                const result = await userCourseService.buyCourse(id,course)
 
                 res.json({success:true})
             } catch (error) {

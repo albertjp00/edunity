@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import profilePic from './../../../assets/profilePic.png'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/navbar/navbar'
+import instructorApi from '../../../api/instructorApi'
 
 
 const ProfileEdit = () => {
@@ -50,7 +51,7 @@ const ProfileEdit = () => {
       formData.append('profileImage', selectedFile);
     }
          
-        const response = await axios.put('http://localhost:4000/instructor/profile',
+        const response = await instructorApi.put('/instructor/profile',
             formData,{
             headers:{
                 Authorization:`Bearer ${token}`
@@ -68,7 +69,7 @@ const ProfileEdit = () => {
     const getProfile  = async  ()=>{
         try {
             const token = localStorage.getItem('instructor')
-    const response = await axios.get('http://localhost:4000/instructor/profile',{
+    const response = await instructorApi.get('/instructor/profile',{
       headers: {
           Authorization: `Bearer ${token}`,
         },

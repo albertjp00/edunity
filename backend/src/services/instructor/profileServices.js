@@ -3,13 +3,13 @@ const Instructor = require('../../models/instructorModel')
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt')
 
-const getProfile = async (token)=>{
+const getProfile = async (id)=>{
     try {
 
-        const id = jwt.verify(token,'secret key')
-        // console.log('jswtttt',id.id);
         
-        const instructor = await Instructor.findById(id.id)
+        // console.log('instId',id);
+        
+        const instructor = await Instructor.findById(id)
         return instructor
         
     } catch (error) {
@@ -18,16 +18,15 @@ const getProfile = async (token)=>{
     }
 }
 
-const editProfile = async (token,data)=>{
+const editProfile = async (id,data)=>{
     try {
-        const id = jwt.verify(token,'secret key')
         console.log('editProfile');
         
         console.log(id);
         console.log(data);
         
         
-    const update = await Instructor.findByIdAndUpdate(id.id,data,
+    const update = await Instructor.findByIdAndUpdate(id,data,
         {new:true}
     )
     if(update){

@@ -32,7 +32,7 @@ const ViewKYC = () => {
       const res = await axios.put(`http://localhost:4000/admin/verify-kyc/${kyc.instructorId}`)
       if (res.data.success) {
         toast.success("KYC Verified")
-        navigate('/admin/home')
+        navigate('/admin/instructors')
       }
     } catch (err) {
       console.log(err)
@@ -47,7 +47,7 @@ const ViewKYC = () => {
       const res = await axios.put(`http://localhost:4000/admin/reject-kyc/${kyc.instructorId}`)
       if (res.data.success) {
         toast.success("KYC Rejected")
-        navigate('/admin/home')
+        navigate('/admin/instructors')
       }
     } catch (err) {
       console.log(err)

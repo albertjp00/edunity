@@ -5,31 +5,32 @@ import { toast } from 'react-toastify'
 import profilePic from './../../../assets/profilePic.png'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../../components/navbar/navbar'
+import api from '../../../api/axios'
 
 
 const EditProfile = () => {
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const [data, setData] = useState({
-  name: '',
-  email: '',
-  phone: '',
-  bio: '',
-  location: '',
-  dob: '',
-  gender: '',
-  profileImage: '',
-});
+    name: '',
+    email: '',
+    phone: '',
+    bio: '',
+    location: '',
+    dob: '',
+    gender: '',
+    profileImage: '',
+  });
 
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const validate = ()=>{
+  const validate = () => {
 
-    const {name,number} = data
+    const { name, number } = data
 
-    if(!name.trim()){
-      toast.error('Please fill all the fileds',{autoClose:1500})
+    if (!name.trim()) {
+      toast.error('Please fill all the fileds', { autoClose: 1500 })
       return false
     }
 
@@ -39,7 +40,7 @@ const EditProfile = () => {
     //     setMessage('please fill all the fileds')
     // }
 
-    
+
 
     return true
 
@@ -47,7 +48,7 @@ const EditProfile = () => {
 
   const handleChange = (e) => {
     console.log(data);
-    
+
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
@@ -59,8 +60,8 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!validate()){
-        return 
+    if (!validate()) {
+      return
     }
 
     const token = localStorage.getItem('token');
@@ -79,8 +80,8 @@ const EditProfile = () => {
     }
 
     try {
-      const response = await axios.put(
-        'http://localhost:4000/user/profile',
+      const response = await api.put(
+        '/user/profile',
         formData,
         {
           headers: {
@@ -100,115 +101,115 @@ const EditProfile = () => {
     }
   };
 
-   
-    const getProfile  = async  ()=>{
-        const token = localStorage.getItem('token')
-    const response = await axios.get('http://localhost:4000/user/profile',{
+
+  const getProfile = async () => {
+    const token = localStorage.getItem('token')
+    const response = await api.get('/user/profile', {
       headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        Authorization: `Bearer ${token}`,
+      },
     })
-    
+
     console.log(response.data.data);
     setData(response.data.data)
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getProfile()
-  },[])
+  }, [])
 
 
   return (
     <>
-    <Navbar />
-      
-  <div className="edit-container">
-    <h2 className="edit-title">Edit Profile</h2>
-    <img
+      <Navbar />
+
+      <div className="edit-container">
+        <h2 className="edit-title">Edit Profile</h2>
+        <img
           src={
             selectedFile
               ? URL.createObjectURL(selectedFile)
               : data.profileImage
-              ? `http://localhost:4000/assets/${data.profileImage}`
-              : profilePic
+                ? `http://localhost:4000/assets/${data.profileImage}`
+                : profilePic
           }
           alt="Profile"
           className="profile-avatar"
         />
-    
-    <form onSubmit={handleSubmit}  className="edit-form">
-      <div className="edit-inputs">
-        <label>Upload Profile Image:</label>
-    <input
-      type="file"
-      name="profileImage"
-      accept="image/*"
-      onChange={handleImageChange}
-    />
-    
-    <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={data.name}
-          onChange={handleChange}
-          placeholder="Enter Name"
-        />
 
-        <label>Phone Number</label>
-        <input
-          type="text"
-          name="phone"
-          value={data.phone}
-          onChange={handleChange}
-          placeholder="Enter Phone Number"
-        />
+        <form onSubmit={handleSubmit} className="edit-form">
+          <div className="edit-inputs">
+            <label>Upload Profile Image:</label>
+            <input
+              type="file"
+              name="profileImage"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
 
-        <label>Bio</label>
-        <textarea
-          name="bio"
-          value={data.bio}
-          onChange={handleChange}
-          placeholder="Write a short bio"
-        />
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={data.name}
+              onChange={handleChange}
+              placeholder="Enter Name"
+            />
 
-        <label>Location</label>
-        <input
-          type="text"
-          name="location"
-          value={data.location}
-          onChange={handleChange}
-          placeholder="Enter Location"
-        />
+            <label>Phone Number</label>
+            <input
+              type="text"
+              name="phone"
+              value={data.phone}
+              onChange={handleChange}
+              placeholder="Enter Phone Number"
+            />
 
-        <label>Date of Birth</label>
-        <input
-          type="date"
-          name="dob"
-          value={data.dob}
-          onChange={handleChange}
-        />
+            <label>Bio</label>
+            <textarea
+              name="bio"
+              value={data.bio}
+              onChange={handleChange}
+              placeholder="Write a short bio"
+            />
 
-        <label>Gender</label>
-        <select
-          name="gender"
-          value={data.gender}
-          onChange={handleChange}
-        >
-          <option value="">Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+            <label>Location</label>
+            <input
+              type="text"
+              name="location"
+              value={data.location}
+              onChange={handleChange}
+              placeholder="Enter Location"
+            />
 
-        </div>
-      <div className="submit-btn">
-        <button type="submit">Save Changes</button>
+            <label>Date of Birth</label>
+            <input
+              type="date"
+              name="dob"
+              value={data.dob}
+              onChange={handleChange}
+            />
+
+            <label>Gender</label>
+            <select
+              name="gender"
+              value={data.gender}
+              onChange={handleChange}
+            >
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+
+          </div>
+          <div className="submit-btn">
+            <button type="submit">Save Changes</button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
 
-</>
+    </>
   )
 }
 

@@ -68,17 +68,16 @@ const getDetails = async (id)=>{
 
  
 
-const buyCourse = async (userToken, courseId) => {
+const buyCourse = async (id, courseId) => {
   try {
-    const decoded = jwt.verify(userToken, 'secret key');
-    const userId = decoded.id;
+    
 
     const course = await Course.findById(courseId);
     if (!course) throw new Error('Course not found');
     console.log('bought ',course);
     
     const myCourse = await MyCourse.create({
-      userId,
+      id  ,
       course: {
         id:course._id,
         title: course.title,
