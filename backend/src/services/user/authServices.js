@@ -3,7 +3,8 @@ const User = require("../../models/userModel");
 const { generateToken } = require("../../utils/jwt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config()
-
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
 //register user -----------
@@ -95,9 +96,31 @@ const login = async ({ email, password }) => {
 };
 
 
+const loginWithGoogle = async (googleToken) => {
+  const ticket = await client.verifyIdToken({
+    idToken: googleToken,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+
+  const { email, name } = ticket.getPayload();
+
+  let user = await User.findOne({email:email});
+  if (!user) {
+    user = await User.create({ name, email });
+  }
+
+  const accessToken = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.SECRET_KEY,
+    { expiresIn: '1d' }
+  );
+
+  return accessToken;
+};
 
 
-module.exports = { registerRequest, verifyOtpAndRegister, login };
+
+module.exports = { registerRequest, verifyOtpAndRegister, login , loginWithGoogle };
 
 
 

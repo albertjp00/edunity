@@ -3,15 +3,14 @@ const jwt = require('jsonwebtoken');
 const myCourses = require('../../models/myCourses');
 
 
-const add = async (data) => {
+const add = async (data,id) => {
   try {
     console.log('add course ', JSON.stringify(data, null, 2));
     
 
-    const id = jwt.verify(data.instructorId,'secret key')
-    console.log('instructor id ',id);
     
-    data.instructorId = id.id
+    
+    data.instructorId = id
 
     const course = new Course(data);
     const added = await course.save();
@@ -49,14 +48,13 @@ const updateCourse = async (data, id) => {
 };
 
 
-const fetchCourses = async (token)=>{
+const fetchCourses = async (id)=>{
     try {
 
-        const id = jwt.verify(token,'secret key') 
         console.log(id);
         
 
-        const courses = await Course.find({instructorId : id.id})
+        const courses = await Course.find({instructorId : id})
         // console.log(courses);
         
 

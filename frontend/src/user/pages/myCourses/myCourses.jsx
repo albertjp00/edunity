@@ -3,17 +3,22 @@ import Navbar from '../../components/navbar/navbar';
 import axios from 'axios';
 import './myCourses.css'
 import { useNavigate } from 'react-router-dom';
+import api from '../../../api/axios';
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
 
   const navigate = useNavigate()
 
-  const userId = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/user/myCourses?id=${userId}`);
+      const res = await api.get(`/user/myCourses?id=${token}`,{
+        headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      });
       if (res.data.success) {
         setCourses(res.data.courses);
         console.log('courses',res.data);

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './viewMyCourse.css';
 import Navbar from '../../components/navbar/navbar';
+import api from '../../../api/axios';
 
 const ViewMyCourse = () => {
   const { id } = useParams();
@@ -10,9 +11,15 @@ const ViewMyCourse = () => {
   const [expandedModule, setExpandedModule] = useState(null);
   const [completedModules, setCompletedModules] = useState([]);
 
+  const token = localStorage.getItem('token')
+
   const fetchCourse = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/user/viewMyCourse?id=${id}`);
+      const res = await api.get(`/user/viewMyCourse?id=${id}`,{
+        headers: {
+        Authorization: `Bearer ${token}`,
+      }
+      });
       setCourse(res.data.course.course);
       setCompletedModules(res.data.course.progress?.completedModules || []);
     } catch (err) {
@@ -36,9 +43,12 @@ const ViewMyCourse = () => {
 
   const markAsCompleted = async (moduleTitle) => {
     try {
-      await axios.post('http://localhost:4000/user/updateProgress', {
+      await api.post('/user/updateProgress', {
         courseId: id,
         moduleTitle,
+        headers: {
+        Authorization: `Bearer ${token}`,
+      }
       });
       setCompletedModules((prev) => [...prev, moduleTitle]);
     } catch (err) {

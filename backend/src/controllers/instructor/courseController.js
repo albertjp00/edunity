@@ -6,6 +6,8 @@ const courseService = require('../../services/instructor/courseServices')
     const addCourse = async (req,res)=>{
         try {
 
+          const id = req.instructor.id
+
             const file = req.file.filename
             console.log('add course');
             
@@ -21,7 +23,7 @@ const courseService = require('../../services/instructor/courseServices')
 
             
             
-            const save = await courseService.add(courseData)
+            const save = await courseService.add(courseData,id)
 
             if(save){
                 res.status(200).json({success:true})
@@ -44,8 +46,6 @@ const editCourse = async (req, res) => {
   try {
     const id = req.query.id;
     console.log('edit course ');
-
-
 
     const courseData = {
       ...req.body,
@@ -77,10 +77,10 @@ const editCourse = async (req, res) => {
 
     const getCourse = async (req,res)=>{
         try {
-            const token = req.query.id
-            console.log('get Courses ',token);
+            const id = req.instructor.id
+            console.log('get Courses ',id);
             
-            const data = await courseService.fetchCourses(token)
+            const data = await courseService.fetchCourses(id)
             // console.log(data);
             
 

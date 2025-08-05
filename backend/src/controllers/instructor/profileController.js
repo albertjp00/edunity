@@ -51,17 +51,17 @@ const passwordChange = async(req,res)=>{
     try {
             
             const {oldPassword,newPassword} = req.body
+            
     
             console.log('instructor change password ',oldPassword , newPassword);
     
-            const authHeader = req.headers['authorization']
-            const token  = authHeader && authHeader.split(' ')[1]
+            const id = req.instructor.id
 
-            console.log('token',token);
+            console.log('token',id);
             
     
 
-            const update = await profileServices.passwordChangeService(oldPassword,newPassword,token)
+            const update = await profileServices.passwordChangeService(oldPassword,newPassword,id)
     
             if(update){
                 res.status(200).json({success:true})

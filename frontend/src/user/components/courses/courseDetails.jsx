@@ -18,7 +18,13 @@ const CourseDetailsUser = () => {
     try {
       const userId = localStorage.getItem('token');
 
-      const res = await axios.get(`http://localhost:4000/user/courseDetails?id=${id}&user=${userId}`);
+      const res = await api.get(`/user/courseDetails?id=${id}&user=${userId}`,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      );
 
       setCourse(res.data.course.course);
       setInstructor(res.data.course.instructor);

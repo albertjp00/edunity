@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const { registerRequest, verifyOtpAndRegister } = require("../controllers/user/authController");
+const { registerRequest, verifyOtpAndRegister, googleLogin } = require("../controllers/user/authController");
 const { loginUser } = require("../controllers/user/authController");
 const { profile, editProfile, changePassword } = require("../controllers/user/profileController");
 
@@ -40,6 +40,9 @@ router.post("/register", registerRequest);
 router.post("/login", loginUser);
 router.post('/verifyOtp', verifyOtpAndRegister)
 
+router.post('/googleLogin', googleLogin);
+
+
 router.get('/profile', authMiddleware , profile)
 router.put('/profile',authMiddleware, upload.single('profileImage'), editProfile)
 router.put('/changePassword',authMiddleware , changePassword)
@@ -50,13 +53,13 @@ router.put('/resetPassword', resetPassword)
 
 
 router.get('/getCourses', getCourses)
-router.get('/courseDetails', courseDetails)
+router.get('/courseDetails',authMiddleware , courseDetails)
 router.get('/getInstructors', getInstructotDetails)
 
 router.post('/buyCourse', authMiddleware , upload.none(), buyCourse)
 
-router.get('/myCourses', getMyCourses)
-router.get('/viewMyCourse', viewMyCourse)
-router.post('/updateProgress', updateProgress)
+router.get('/myCourses',authMiddleware , getMyCourses)
+router.get('/viewMyCourse', authMiddleware , viewMyCourse)
+router.post('/updateProgress' ,authMiddleware , updateProgress)
 
 module.exports = router

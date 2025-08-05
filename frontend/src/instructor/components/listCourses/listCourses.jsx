@@ -3,6 +3,7 @@ import Navbar from '../../components/navbar/navbar';
 import axios from 'axios';
 import './listCourses.css'
 import { useNavigate } from 'react-router-dom';
+import instructorApi from '../../../api/instructorApi';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -13,7 +14,9 @@ const Courses = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/instructor/getCourse?id=${instructorId}`);
+      const res = await instructorApi.get(`/instructor/getCourse?id=${instructorId}`,{
+        
+      });
       if (res.data.success) {
         setCourses(res.data.course);
         console.log('courses',courses);

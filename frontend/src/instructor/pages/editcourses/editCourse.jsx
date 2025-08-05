@@ -4,6 +4,7 @@ import './editCourse.css';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../../components/navbar/navbar';
+import instructorApi from '../../../api/instructorApi';
 
 const EditCourse = () => {
   const { id } = useParams();
@@ -90,7 +91,7 @@ const EditCourse = () => {
 
       formData.append('modules', JSON.stringify(form.modules));
 
-      const res = await axios.put(`http://localhost:4000/instructor/editCourse/?id=${id}`, formData, {
+      const res = await instructorApi.put(`/instructor/editCourse/?id=${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -106,7 +107,7 @@ const EditCourse = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/instructor/courseDetails?id=${id}`);
+      const res = await instructorApi.get(`/instructor/courseDetails?id=${id}`);
       if (res.data.success) {
         console.log(res.data.course);
         

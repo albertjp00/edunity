@@ -4,6 +4,7 @@ import './addCourses.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/navbar';
+import instructorApi from '../../../api/instructorApi';
 
 const AddCourse = () => {
   const navigate = useNavigate();
@@ -82,8 +83,12 @@ const AddCourse = () => {
       formData.append('thumbnail', form.thumbnail);
       formData.append('modules', JSON.stringify(form.modules));
 
-      const res = await axios.post('http://localhost:4000/instructor/addCourse', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      const token = localStorage.getItem('instructor')
+
+      const res = await instructorApi.post('/instructor/addCourse', formData, {
+        headers:{
+                Authorization:`Bearer ${token}`
+            },
       });
 
       if (res.data.success) {

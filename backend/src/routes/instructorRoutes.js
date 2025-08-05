@@ -43,7 +43,7 @@ instructorRoute.post('/login',loginInstructor)
 
 instructorRoute.get('/profile', instAuthMiddleware,profileDetails)
 instructorRoute.put('/profile', instAuthMiddleware ,upload.single('profileImage'),profileEdit)
-instructorRoute.post('/kycSubmit',instAuthMiddleware ,
+instructorRoute.post('/kycSubmit' ,instAuthMiddleware ,
   upload.fields([
     { name: 'idProof', maxCount: 1 },
     { name: 'addressProof', maxCount: 1 }
@@ -51,14 +51,14 @@ instructorRoute.post('/kycSubmit',instAuthMiddleware ,
   kycSubmit
 );
 
-instructorRoute.put('/passwordChange',passwordChange)
+instructorRoute.put('/passwordChange', instAuthMiddleware ,passwordChange)
 
-instructorRoute.post('/addCourse',upload.single('thumbnail'),addCourse)
+instructorRoute.post('/addCourse', instAuthMiddleware ,upload.single('thumbnail'),addCourse)
 
-instructorRoute.put('/editCourse',upload.single('thumbnail'),editCourse)
+instructorRoute.put('/editCourse', instAuthMiddleware , upload.single('thumbnail'),editCourse)
 
-instructorRoute.get('/getCourse',getCourse)
+instructorRoute.get('/getCourse' , instAuthMiddleware ,getCourse)
 
-instructorRoute.get('/courseDetails',courseDetails) 
+instructorRoute.get('/courseDetails' , instAuthMiddleware ,courseDetails) 
 
 module.exports = instructorRoute

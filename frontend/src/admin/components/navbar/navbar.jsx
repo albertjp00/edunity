@@ -8,7 +8,7 @@ const Navbar = ({ toggleSidebar }) => {
   const profileImage = ''
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken')
+    localStorage.removeItem('admin')
    navigate('/admin/login')
   }
 

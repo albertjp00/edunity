@@ -6,13 +6,23 @@ import banner from '../../../assets/banner.jpeg'
 import { useState } from 'react'
 import Courses from '../../components/courses/courses'
 import InstructorsUsersSide from '../../components/instructors/instructors'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  const navigate = useNavigate()
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
   }
+
+  useEffect(()=>{
+    if(!localStorage.getItem('token')){
+      navigate('/user/login')
+    }
+  },[])
 
   return (
     <div>

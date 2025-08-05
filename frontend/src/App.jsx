@@ -44,6 +44,7 @@ import AddCourse from './instructor/pages/addCourses/addCourses';
 import CourseDetails from './instructor/pages/courseDetails/courseDetails';
 
 import EditCourse from './instructor/pages/editcourses/editCourse';
+import NotFound from './user/pages/errorPage/errorPage';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
 
           <Router>
             <Routes>
+              <Route path='/' element={<Home />} />
               <Route path='/user/home'  element={<Home />} />
               <Route path='/user/login' element={<Login />} />
               <Route path='/user/register' element={<Register />} />
@@ -105,7 +107,7 @@ function App() {
               <Route path='/admin/viewKyc/:id' element={<ViewKYC />}/>
 
             
-
+            <Route path="*" element={<NotFound />} />
 
             
 

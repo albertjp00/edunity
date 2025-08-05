@@ -67,10 +67,10 @@ const userCourseService = require('../../services/user/userCourseService')
         
           const getMyCourses = async(req,res)=>{
       try {
-        const token = req.query.id
-        console.log('my courses ',token);
+        const id = req.user.id
+        console.log('my courses ');
         
-        const result = await userCourseService.myCourses(token)
+        const result = await userCourseService.myCourses(id)
         // console.log(result);
         
         res.json({success:true,courses:result})

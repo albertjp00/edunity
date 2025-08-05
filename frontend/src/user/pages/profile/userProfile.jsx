@@ -45,7 +45,7 @@ const ProfilePage = () => {
     try {
       console.log('fetching');
 
-      const res = await axios.get(`http://localhost:4000/user/myCourses?id=${token}`);
+      const res = await api.get(`/user/myCourses?id=${token}`);
       if (res.data.success) {
         setCourses(res.data.courses);
         console.log('courses', res.data);

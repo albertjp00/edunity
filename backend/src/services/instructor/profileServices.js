@@ -39,12 +39,12 @@ const editProfile = async (id,data)=>{
     }
 }
 
-const passwordChangeService = async (old,newPass,token )=>{
+const passwordChangeService = async (old,newPass,id )=>{
     try {
-        console.log('pass change servicce',old,newPass,token);
+        console.log('pass change servicce',old,newPass,id);
         
-        const id = jwt.verify(token,'secret key')
-        const user = await Instructor.findById(id.id)
+        
+        const user = await Instructor.findById(id)
 
         const isMatch = await bcrypt.compare(old,user.password)
         if(!isMatch) throw new Error('invalid old password')

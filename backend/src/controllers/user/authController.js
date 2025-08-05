@@ -45,6 +45,20 @@ const loginUser = async (req, res) => {
   }
 };
 
+
+const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    const accessToken = await authService.loginWithGoogle(token);
+
+    return res.json({ success: true, token: accessToken });
+  } catch (error) {
+    console.log('Google Login Error:', error);
+    return res.status(500).json({ success: false, message: 'Google login failed' });
+  }
+};
+
   
 
-module.exports = { registerRequest , verifyOtpAndRegister, loginUser };
+module.exports = { registerRequest , verifyOtpAndRegister, loginUser , googleLogin };

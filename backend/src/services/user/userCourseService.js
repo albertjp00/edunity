@@ -77,7 +77,7 @@ const buyCourse = async (id, courseId) => {
     console.log('bought ',course);
     
     const myCourse = await MyCourse.create({
-      id  ,
+      userId:id  ,
       course: {
         id:course._id,
         title: course.title,
@@ -101,12 +101,14 @@ const buyCourse = async (id, courseId) => {
 
 
 
-const myCourses = async (token) => {
-  try {
-    const decoded = jwt.verify(token, 'secret key');
-    console.log(decoded);
 
-    const courses = await MyCourse.find({ userId: decoded.id });
+
+const myCourses = async (id) => {
+  try {
+    
+    // console.log(decoded);
+
+    const courses = await MyCourse.find({ userId: id });
     console.log("My Courses:");
 
     return courses.map(entry => entry.course);
